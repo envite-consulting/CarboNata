@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: fibonacci-worker
+
+camunda:
+  client:
+    auth:
+      client-id: ${CLIENT_ID}
+      client-secret: ${CLIENT_SECRET}
+    cluster-id: ${CLIENT_ID}
+    region: ${CLIENT_REGION}
+
