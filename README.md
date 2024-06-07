@@ -5,7 +5,7 @@ Measuring the energy and carbon usage of Camunda Workers.
 All test ressources are under `src/` and `tf/`. while the first folder contains the test workers and processes, the latter contains the Terraform files to setup a Camunda 8 cluster based on AWS EKS and deploys the neccessary resources.
 
 ## C8 on AWS EKS via Terraform
- <span style="color:red">WARNING: There is a bug inside the eks module provided by Camunda which breaks the destroying of resources, you have to execute `terraform apply -destroy` twice</span>
+ <span style="color:red">WARNING: There is a bug inside the eks module provided by Camunda which MAY break the destroying of resources, in case that happens, you have to execute `terraform apply -destroy` twice</span>
 - Make sure you have AWS CLI (and configured), Terraform and Zeebe CLI installed
 - Clone Repo
 - Use ``terraform init`` and ``terraform apply`` in the ``tf`` folder of the project
