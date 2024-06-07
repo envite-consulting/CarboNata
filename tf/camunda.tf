@@ -15,10 +15,7 @@ resource "helm_release" "camunda-platform" {
   ]
   */
 
-  wait = true
-  timeout = 600000000
-  
-  depends_on = [null_resource.merge_kubeconfig, data.http.latest_camunda_values]
+  depends_on = [null_resource.merge_kubeconfig, data.http.latest_camunda_values, module.postgresql]
 }
 
 data "http" "latest_camunda_values" {
