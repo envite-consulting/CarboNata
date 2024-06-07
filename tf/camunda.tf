@@ -2,10 +2,21 @@ resource "helm_release" "camunda-platform" {
   name       = "camunda-platform"
   chart      = "camunda-platform"
   repository = "https://helm.camunda.io"
+  namespace = "camunda"
+  create_namespace = true
 
+  values = [
+    "${file("./values/c8-values-8.5.2.yaml")}"
+  ]
+  
+  /* In case of using the latest values from c8
   values = [
     "${data.http.latest_camunda_values.response_body}"
   ]
+  */
+
+  wait = true
+  timeout = 600000000
   
   depends_on = [null_resource.merge_kubeconfig, data.http.latest_camunda_values]
 }
@@ -23,6 +34,7 @@ resource "kubernetes_job_v1" "bpmnmodeldeployment" {
   depends_on = [ kubernetes_config_map_v1.bpmnmodel, helm_release.camunda-platform ]
   metadata {
     name = "bpmndeployment"
+    namespace = "camunda"
   }
   spec {
     template {
@@ -69,12 +81,14 @@ resource "kubernetes_job_v1" "bpmnmodeldeployment" {
 
 // create configmap to hold process file
 resource "kubernetes_config_map_v1" "bpmnmodel" {
+  depends_on = [ helm_release.camunda-platform ]
   metadata {
     name = "bpmnmodeldata"
+    namespace = "camunda"
   }
 
   data = {
-    "Fibonacciprocess.bpmn" = file("${abspath(path.module)}/src/fibonacci-process/Fibonacciprocess.bpmn")
+    "Fibonacciprocess.bpmn" = file("${abspath(path.module)}/../src/fibonacci-process/Fibonacciprocess.bpmn")
   }
   
 }

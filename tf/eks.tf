@@ -34,6 +34,8 @@ resource "null_resource" "merge_kubeconfig" {
 
   provisioner "local-exec" {
     command = "aws eks --region ${var.region} update-kubeconfig --name ${var.camunda-cluster-name}"
+    on_failure = fail
+    when = create
   }
 }
 
