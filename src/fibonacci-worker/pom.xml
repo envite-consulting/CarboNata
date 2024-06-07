@@ -17,6 +17,7 @@
 		<java.version>17</java.version>
 		<kotlin.version>1.9.24</kotlin.version>
 		<camunda.version>8.5.3</camunda.version>
+		<mockk.version>1.12.0</mockk.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -53,6 +54,12 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>io.mockk</groupId>
+			<artifactId>mockk</artifactId>
+			<version>${mockk.version}</version>
+			<scope>test</scope>
+		</dependency>
 
 	</dependencies>
 

@@ -8,10 +8,11 @@ import io.camunda.zeebe.spring.client.annotation.JobWorker
 import org.springframework.stereotype.Component
 
 @Component
-class FibonacciCalculatorWorker(private val zeebeClient: ZeebeClient): Logging{
+class FibonacciCalculatorWorker(private val zeebeClient: ZeebeClient, private val jobExporter: JobExporterService): Logging{
 
     @JobWorker(type="calculate-fibonacci")
     fun handle(job: ActivatedJob){
+        jobExporter.reportJobStarted(job.key.toString())
         val fibonacciCount  = job.getVariable("fibonacci-count")?.toString()?.toInt()
 
         if(fibonacciCount == null){
@@ -25,6 +26,7 @@ class FibonacciCalculatorWorker(private val zeebeClient: ZeebeClient): Logging{
         fibonacciRec(fibonacciCount!!)
         log().debug("Done calculating the first {} fibonacci-numbers", fibonacciCount)
 
+        jobExporter.reportJobFinished(job.key.toString())
         zeebeClient.newCompleteCommand(job).send()
     }
 }
