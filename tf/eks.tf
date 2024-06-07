@@ -30,15 +30,17 @@ module "postgresql" {
 
 resource "null_resource" "merge_kubeconfig" {
 
-  depends_on = [module.eks_cluster]
+  depends_on = [module.eks_cluster, null_resource.aws_cli_check]
 
   provisioner "local-exec" {
     command = "aws eks --region ${var.region} update-kubeconfig --name ${var.camunda-cluster-name}"
+    on_failure = fail
+    when = create
   }
 }
 
 resource "null_resource" "aws_cli_check" {
-
+ 
   provisioner "local-exec" {
     command = "where aws"
     on_failure = fail

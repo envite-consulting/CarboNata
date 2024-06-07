@@ -32,7 +32,7 @@ class JobExporterService @Autowired constructor(private val registry: MeterRegis
     fun reportJobFinished(jobId: String) {
         Counter.builder("fibonacciworker_jobs_finished")
             .description("Increases for every job handling finished")
-            //.tag("jobKey", jobId)
+            .tag("jobKey", jobId)
             .register(registry)
             .increment()
         jobsInExecution.decrementAndGet()

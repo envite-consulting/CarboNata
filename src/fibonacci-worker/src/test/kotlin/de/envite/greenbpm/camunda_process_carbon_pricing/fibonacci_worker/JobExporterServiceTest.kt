@@ -58,7 +58,7 @@ class JobExporterServiceTest {
 
         jobExporterService.reportJobFinished(id)
 
-        verify { jobsStartedCounter.increment() }
+        verify { jobsFinishedCounter.increment() }
 
         assertEquals(-1, jobExporterService.jobsInExecution.get())
 
