@@ -10,3 +10,24 @@ camunda:
     cluster-id: ${CLIENT_ID}
     region: ${CLIENT_REGION}
 
+zeebe:
+  client:
+    broker:
+     gatewayAddress: ${GATEWAY_ADDRESS:[::1]:26500}
+    security:
+     plaintext: true
+
+server:
+  port: ${SERVER_PORT:8080}
+
+# enable prometheus
+management:
+ endpoints:
+  web:
+   exposure:
+    include: prometheus
+ metrics:
+  export:
+   prometheus:
+    enabled: true
+
