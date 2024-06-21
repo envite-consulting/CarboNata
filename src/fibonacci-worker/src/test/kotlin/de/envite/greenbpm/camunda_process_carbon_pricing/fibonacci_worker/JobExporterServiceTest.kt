@@ -1,24 +1,19 @@
 package de.envite.greenbpm.camunda_process_carbon_pricing.fibonacci_worker
 
 import io.micrometer.core.instrument.Counter
-import io.micrometer.core.instrument.Gauge
 import io.micrometer.core.instrument.MeterRegistry
-import io.micrometer.core.instrument.Tag
-import org.junit.jupiter.api.BeforeEach
-import org.springframework.boot.test.context.SpringBootTest
-
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers.*
+import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 class JobExporterServiceTest {
     private lateinit var meterRegistry: MeterRegistry
-    private lateinit var jobExporterService: JobExporterService
+    private lateinit var classUnderTest: JobExporterService
     private lateinit var jobsStartedCounter: Counter
     private lateinit var jobsFinishedCounter: Counter
 
@@ -38,29 +33,29 @@ class JobExporterServiceTest {
                 .register(meterRegistry)
         } returns  jobsFinishedCounter
 
-        jobExporterService = JobExporterService(meterRegistry)
+        classUnderTest = JobExporterService(meterRegistry)
     }
 
     @Test
     fun `reportJobStarted should increase jobsStartedCounter`() {
         val id = "testId"
 
-        jobExporterService.reportJobStarted(id)
+        classUnderTest.reportJobStarted(id)
 
         verify { jobsStartedCounter.increment() }
 
-        assertEquals(1, jobExporterService.jobsInExecution.get())
+        assertEquals(1, classUnderTest.getJobsInExecution())
     }
 
     @Test
     fun `reportJobFinished should increase jobsFinishedCounter`() {
         val id = "testId"
 
-        jobExporterService.reportJobFinished(id)
+        classUnderTest.reportJobFinished(id)
 
         verify { jobsFinishedCounter.increment() }
 
-        assertEquals(-1, jobExporterService.jobsInExecution.get())
+        assertEquals(-1, classUnderTest.getJobsInExecution())
 
     }
 
@@ -68,17 +63,13 @@ class JobExporterServiceTest {
     fun `increase and decrease jobsInExecution`() {
         val id = "testId"
 
-        jobExporterService.reportJobStarted(id)
+        classUnderTest.reportJobStarted(id)
 
-        assertEquals(1, jobExporterService.jobsInExecution.get())
+        assertEquals(1, classUnderTest.getJobsInExecution())
 
-        jobExporterService.reportJobFinished(id)
+        classUnderTest.reportJobFinished(id)
 
-        assertEquals(0, jobExporterService.jobsInExecution.get())
+        assertEquals(0, classUnderTest.getJobsInExecution())
 
     }
-
-
-
-
 }
