@@ -26,70 +26,6 @@ data "http" "latest_camunda_values" {
   }
 }
 
-// deploy configmap with process via zbctl
-resource "kubernetes_job_v1" "bpmnmodeldeployment" {
-  depends_on = [ kubernetes_config_map_v1.bpmnmodel, helm_release.camunda-platform ]
-  metadata {
-    name = "bpmndeployment"
-    namespace = "camunda"
-  }
-  spec {
-    template {
-      metadata {}
-      spec {
-        container {
-          name  = "bpmndeployment"
-          image = "sitapati/zbctl:8.2.10"
-          
-
-          env {
-            name  = "ZEEBE_ADDRESS"
-            value = "camunda-platform-zeebe-gateway:26500"
-          }
-
-          command = ["/zbctl"]
-          args = [ "deploy", "resource", "/process/Fibonacciprocess.bpmn" , "--insecure"]
-
-          // for future testing purposes I'll leave this here: 
-          //image = "alpine:3.14"
-          //command = ["bin/cat"]
-          //args = [ "/process/example_process.bpmn" ]
-
-          volume_mount {
-            name = "bpmnmodelvolume"
-            mount_path = "/process"
-          }
-        }
-
-        restart_policy = "Never"
-
-        volume {
-          name = "bpmnmodelvolume"
-          config_map {
-            name = "bpmnmodeldata"
-          }
-        }
-      }
-    }
-    backoff_limit = 1
-  }
-  wait_for_completion = true
-}
-
-// create configmap to hold process file
-resource "kubernetes_config_map_v1" "bpmnmodel" {
-  depends_on = [ helm_release.camunda-platform ]
-  metadata {
-    name = "bpmnmodeldata"
-    namespace = "camunda"
-  }
-
-  data = {
-    "Fibonacciprocess.bpmn" = file("${abspath(path.module)}/../src/fibonacci-process/Fibonacciprocess.bpmn")
-  }
-  
-}
-
 /*
 
 resource "helm_release" "console-worker" {
@@ -103,7 +39,6 @@ resource "helm_release" "console-worker" {
 
 resource "kubernetes_job_v1" "processstart" {
   count = var.create_module ? 1 : 0
-  depends_on = [ kubernetes_job_v1.bpmnmodeldeployment ]
   metadata {
     name = "processstart"
     namespace = var.namespace
