@@ -1,0 +1,28 @@
+name: Backend - Continuous Integration
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'src/fibonacci-worker/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'src/fibonacci-worker/**'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v4
+      - name: Set up JDKs with Matrix Build
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 17
+          cache: 'maven'
+      - name: Build Worker
+        working-directory: ./src/fibonacci-worker
+        run: ./mvnw clean verify
