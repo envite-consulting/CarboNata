@@ -69,6 +69,13 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>io.camunda</groupId>
+			<artifactId>spring-zeebe-test-testcontainer</artifactId>
+			<version>${camunda.version}</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
