@@ -6,15 +6,13 @@ import io.micrometer.core.instrument.MeterRegistry
 import org.springframework.stereotype.Service
 import java.util.concurrent.atomic.AtomicInteger
 
-private const val BASE_NAME = "fibonacciworker_jobs"
-private const val JOB_KEY_TAG = "jobKey"
+internal const val BASE_NAME = "fibonacciworker_jobs"
+internal const val JOB_KEY_TAG = "jobKey"
 
 @Service
 class JobExporterService(private val registry: MeterRegistry) {
 
     private val jobsInExecution = AtomicInteger(0)
-
-    fun getJobsInExecution() = jobsInExecution.get()
 
     init {
         Gauge.builder("${BASE_NAME}_in_execution") {
@@ -29,6 +27,7 @@ class JobExporterService(private val registry: MeterRegistry) {
             .tag(JOB_KEY_TAG, jobId)
             .register(registry)
             .increment()
+
         jobsInExecution.incrementAndGet()
     }
 
@@ -38,6 +37,7 @@ class JobExporterService(private val registry: MeterRegistry) {
             .tag(JOB_KEY_TAG, jobId)
             .register(registry)
             .increment()
+
         jobsInExecution.decrementAndGet()
     }
 }

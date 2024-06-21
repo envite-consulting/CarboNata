@@ -1,17 +1,14 @@
 package de.envite.greenbpm.camunda_process_carbon_pricing.fibonacci_worker
 
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
-class FibonacciKtTest{
-    @ParameterizedTest(name= "For {0}, the Fibonacci is {1}")
+class FibonacciKtTest {
+    @ParameterizedTest(name = "For {0}, the Fibonacci is {1}")
     @MethodSource("getData")
-    fun `should return correct fibonacci values`(input: Int, expected: Int){
-        assertEquals(fibonacciRec(input), expected)
-    }
+    fun `should return correct fibonacci values`(input: Int, expected: Int) = fibonacciRec(input) shouldBe expected
 
     companion object{
         @JvmStatic

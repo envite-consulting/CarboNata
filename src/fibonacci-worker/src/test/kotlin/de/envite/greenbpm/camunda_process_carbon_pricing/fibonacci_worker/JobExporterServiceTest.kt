@@ -1,75 +1,37 @@
 package de.envite.greenbpm.camunda_process_carbon_pricing.fibonacci_worker
 
-import io.micrometer.core.instrument.Counter
-import io.micrometer.core.instrument.MeterRegistry
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
+import io.kotest.assertions.assertSoftly
+import io.kotest.matchers.shouldBe
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest
+
 class JobExporterServiceTest {
-    private lateinit var meterRegistry: MeterRegistry
-    private lateinit var classUnderTest: JobExporterService
-    private lateinit var jobsStartedCounter: Counter
-    private lateinit var jobsFinishedCounter: Counter
 
-    @BeforeEach
-    fun setup(){
-        meterRegistry = mockk(relaxed = true)
-        jobsStartedCounter = mockk(relaxed = true)
-        jobsFinishedCounter = mockk(relaxed = true)
-
-        every { Counter.builder("fibonacciworker_jobs_started")
-                .tag("jobKey","testId")
-                .register(meterRegistry)
-        } returns  jobsStartedCounter
-
-        every { Counter.builder("fibonacciworker_jobs_finished")
-                .tag("jobKey","testId")
-                .register(meterRegistry)
-        } returns  jobsFinishedCounter
-
-        classUnderTest = JobExporterService(meterRegistry)
-    }
+    private val meterRegistry: SimpleMeterRegistry = SimpleMeterRegistry()
+    private val classUnderTest: JobExporterService = JobExporterService(meterRegistry)
 
     @Test
-    fun `reportJobStarted should increase jobsStartedCounter`() {
+    fun `reportJobStarted should increase jobsStartedCounter and update gauge`() {
         val id = "testId"
 
         classUnderTest.reportJobStarted(id)
 
-        verify { jobsStartedCounter.increment() }
-
-        assertEquals(1, classUnderTest.getJobsInExecution())
+        assertSoftly {
+            meterRegistry.get("${BASE_NAME}_started").counter().count() shouldBe 1.0
+            meterRegistry.get("${BASE_NAME}_in_execution").gauge().value() shouldBe 1.0
+        }
     }
 
     @Test
-    fun `reportJobFinished should increase jobsFinishedCounter`() {
+    fun `reportJobStarted should decrease jobsStartedCounter and update gauge`() {
         val id = "testId"
 
         classUnderTest.reportJobFinished(id)
 
-        verify { jobsFinishedCounter.increment() }
-
-        assertEquals(-1, classUnderTest.getJobsInExecution())
-
-    }
-
-    @Test
-    fun `increase and decrease jobsInExecution`() {
-        val id = "testId"
-
-        classUnderTest.reportJobStarted(id)
-
-        assertEquals(1, classUnderTest.getJobsInExecution())
-
-        classUnderTest.reportJobFinished(id)
-
-        assertEquals(0, classUnderTest.getJobsInExecution())
-
+        assertSoftly {
+            meterRegistry.get("${BASE_NAME}_finished").counter().count() shouldBe 1.0
+            meterRegistry.get("${BASE_NAME}_in_execution").gauge().value() shouldBe -1.0
+        }
     }
 }
