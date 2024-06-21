@@ -1,11 +1,21 @@
 # CarboNata 🍝+🗡️
+
 Measuring the energy and carbon usage of Camunda Workers.
 
-## Develop
+<!-- TOC -->
+* [🏗Develop](#develop)
+  * [C8 on AWS EKS via Terraform](#c8-on-aws-eks-via-terraform)
+* [📨Contact](#contact)
+<!-- TOC -->
+
+# 🏗Develop
+
 All test ressources are under `src/` and `tf/`. while the first folder contains the test workers and processes, the latter contains the Terraform files to setup a Camunda 8 cluster based on AWS EKS and deploys the neccessary resources.
 
 ## C8 on AWS EKS via Terraform
- <span style="color:red">WARNING: There is a bug inside the eks module provided by Camunda which MAY break the destroying of resources, in case that happens, you have to execute `terraform apply -destroy` twice</span>
+> [!IMPORTANT]  
+>  There is a bug inside the eks module provided by Camunda which MAY break the destroying of resources, in case that happens, you have to execute `terraform apply -destroy` twice
+
 - Make sure you have AWS CLI (and configured), Terraform and Zeebe CLI installed
 - Clone Repo
 - Use ``terraform init`` and ``terraform apply`` in the ``tf`` folder of the project
@@ -17,3 +27,12 @@ All test ressources are under `src/` and `tf/`. while the first folder contains 
     - The Sample_Process and its worker should already be deployed, therefore you can kick off an instance via ``zbctl create instance Fibonacciprocess --insecure``
     - Alternatively, look at the job resource in the camunda namespace
   - Grafana via: ``kubectl port-forward -n monitoring svc/kube-prometheus-stackr-grafana 9102:80`` and afterwards via ``localhost:9102`` and creds ``admin:prom-operator``
+
+# 📨Contact
+
+If you have any questions or ideas feel free to start a [discussion](https://github.com/envite-consulting/CarboNata/discussions).
+
+This open source project is being developed by [envite consulting GmbH](https://envite.de).
+
+![envite consulting GmbH](assets/envite-black.png#gh-light-mode-only)
+![envite consulting GmbH](assets/envite-white.png#gh-dark-mode-only)
