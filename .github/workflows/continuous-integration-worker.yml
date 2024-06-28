@@ -6,7 +6,7 @@ on:
     paths:
       - 'src/fibonacci-worker/**'
   pull_request:
-    branches: [ main ]
+    branches: "**"
     paths:
       - 'src/fibonacci-worker/**'
   workflow_dispatch:
