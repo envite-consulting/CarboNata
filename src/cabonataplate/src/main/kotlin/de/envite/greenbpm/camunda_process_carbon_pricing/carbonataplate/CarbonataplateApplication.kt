@@ -1,11 +1,11 @@
-package de.envite.greenbpm.camunda_process_carbon_pricing.cabonataplate
+package de.envite.greenbpm.camunda_process_carbon_pricing.carbonataplate
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class CabonataplateApplication
+class CarbonataplateApplication
 
 fun main(args: Array<String>) {
-	runApplication<CabonataplateApplication>(*args)
+	runApplication<CarbonataplateApplication>(*args)
 }
