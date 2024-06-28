@@ -1,0 +1,27 @@
+name: Backend - Continuous Integration
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'src/cabonataplate/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'src/cabonataplate/**'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v4
+      - name: Set up JDKs with Matrix Build
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 17
+      - name: Build Cabonataplate
+        working-directory: ./src/cabonataplate
+        run: ./gradlew clean check
