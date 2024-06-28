@@ -1,8 +1,8 @@
-package de.envite.greenbpm.camunda_process_carbon_pricing.cabonataplate.domain.service
+package de.envite.greenbpm.camunda_process_carbon_pricing.carbonataplate.domain.service
 
-import de.envite.greenbpm.camunda_process_carbon_pricing.cabonataplate.usecase.`in`.TriggerCommand
-import de.envite.greenbpm.camunda_process_carbon_pricing.cabonataplate.usecase.out.CostCommand
-import de.envite.greenbpm.camunda_process_carbon_pricing.cabonataplate.usecase.out.MeasurementQuery
+import de.envite.greenbpm.camunda_process_carbon_pricing.carbonataplate.usecase.`in`.TriggerCommand
+import de.envite.greenbpm.camunda_process_carbon_pricing.carbonataplate.usecase.out.CostCommand
+import de.envite.greenbpm.camunda_process_carbon_pricing.carbonataplate.usecase.out.MeasurementQuery
 
 class BatchService(
     private val measurementQuery: MeasurementQuery,
