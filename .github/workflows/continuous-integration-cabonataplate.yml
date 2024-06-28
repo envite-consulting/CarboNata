@@ -22,6 +22,9 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: 17
+      - name: Change wrapper permissions
+        working-directory: ./src/carbonataplate
+        run: chmod +x ./gradlew    
       - name: Build Carbonataplate
         working-directory: ./src/carbonataplate
         run: ./gradlew clean check
