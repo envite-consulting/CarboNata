@@ -6,6 +6,7 @@ on:
     paths:
       - 'src/carbonataplate/**'
   pull_request:
+    branches: "**"
     paths:
       - 'src/carbonataplate/**'
   workflow_dispatch:
