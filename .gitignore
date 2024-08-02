@@ -33,6 +33,10 @@ build/
 .vscode/
 
 ### Terraform ###
+/tf/c8/.terraform
+/tf/c8/.terraform.lock.hcl
+/tf/c8/terraform.tfstate
+/tf/c8/terraform.tfstate.backup
 /tf/.terraform
 /tf/.terraform.lock.hcl
 /tf/terraform.tfstate
