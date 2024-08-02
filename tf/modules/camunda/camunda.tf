@@ -2,10 +2,10 @@ resource "helm_release" "camunda-platform" {
   name             = "camunda-platform"
   chart            = "camunda-platform"
   repository       = "https://helm.camunda.io"
-  namespace        = "camunda"
+  namespace        = var.namespace
   create_namespace = true
   count            = var.minimal_config ? 0 : 1
-  timeout = 200000000000
+  wait_for_jobs = true
 
   values = [
     "${file("${abspath(path.module)}/values/c8-values-8.5.2.yaml")}"
@@ -24,10 +24,10 @@ resource "helm_release" "camunda-platform-minimal" {
   name             = "camunda-platform"
   chart            = "camunda-platform"
   repository       = "https://helm.camunda.io"
-  namespace        = "camunda"
+  namespace        = var.namespace
   create_namespace = true
   count            = var.minimal_config ? 1 : 0
-  timeout = 200000000000
+  wait_for_jobs = true
 
   values = [
     "${file("${abspath(path.module)}/values/camunda-minimal.yaml")}"
