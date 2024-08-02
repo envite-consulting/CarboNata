@@ -24,11 +24,11 @@ global:
     auth:
       # Disable the Identity authentication for local development
       # it will fall back to basic-auth: demo/demo as default user
-      enabled: false
+      enabled: true
 
 # Disable identity as part of the camunda platform core
 identity:
-  enabled: false
+  enabled: true
 
 console:
   # Camunda Enterprise repository.
@@ -53,7 +53,7 @@ operate:
     tag: 8.5.2
 
 optimize:
-  enabled: false
+  enabled: true
   # https://hub.docker.com/r/camunda/optimize/tags
   image:
     repository: camunda/optimize
@@ -73,7 +73,7 @@ webModeler:
 #
 
 identityKeycloak:
-  enabled: false
+  enabled: true
   # https://hub.docker.com/r/bitnami/keycloak/tags
   image:
     repository: bitnami/keycloak
