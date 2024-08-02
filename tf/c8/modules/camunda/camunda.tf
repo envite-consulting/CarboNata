@@ -5,7 +5,7 @@ resource "helm_release" "camunda-platform" {
   namespace        = var.namespace
   create_namespace = true
   count            = var.minimal_config ? 0 : 1
-  wait_for_jobs = true
+  timeout = 600000
 
   values = [
     "${file("${abspath(path.module)}/values/c8-values-8.5.2.yaml")}"
@@ -27,7 +27,7 @@ resource "helm_release" "camunda-platform-minimal" {
   namespace        = var.namespace
   create_namespace = true
   count            = var.minimal_config ? 1 : 0
-  wait_for_jobs = true
+  timeout = 600000
 
   values = [
     "${file("${abspath(path.module)}/values/camunda-minimal.yaml")}"
