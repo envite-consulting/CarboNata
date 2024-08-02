@@ -8,8 +8,7 @@ resource "helm_release" "prometheus" {
 
 
   values = [
-    "${file("./values/prometheus-values.yaml")}"
+    "${file("${abspath(path.module)}/values/prometheus-values.yaml")}"
   ]
 
-  depends_on = [null_resource.merge_kubeconfig]  
 }

@@ -1,3 +1,4 @@
+/*
 module "eks_cluster" {
   source = "github.com/camunda/camunda-tf-eks-module/modules/eks-cluster"
 
@@ -7,6 +8,8 @@ module "eks_cluster" {
   # Set CIDR ranges or use the defaults
   cluster_service_ipv4_cidr = "10.190.0.0/16"
   cluster_node_ipv4_cidr    = "10.192.0.0/16"
+  # count = var.create_module ? 1 : 0
+
 }
 
 module "postgresql" {
@@ -15,6 +18,7 @@ module "postgresql" {
   auto_minor_version_upgrade = false
   cluster_name               = "carbonata-postgresql" # change "cluster-name" to your name
   default_database_name      = "camunda"
+  # count = var.create_module ? 1 : 0
 
   # Please supply your own secret values
   username         = "demo"
@@ -46,3 +50,4 @@ resource "null_resource" "aws_cli_check" {
     on_failure = fail
   }
 }
+*/

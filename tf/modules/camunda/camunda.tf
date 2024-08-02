@@ -1,21 +1,45 @@
 resource "helm_release" "camunda-platform" {
-  name       = "camunda-platform"
-  chart      = "camunda-platform"
-  repository = "https://helm.camunda.io"
-  namespace = "camunda"
+  name             = "camunda-platform"
+  chart            = "camunda-platform"
+  repository       = "https://helm.camunda.io"
+  namespace        = "camunda"
   create_namespace = true
+  count            = var.minimal_config ? 0 : 1
+  timeout = 200000000000
 
   values = [
-    "${file("./values/c8-values-8.5.2.yaml")}"
+    "${file("${abspath(path.module)}/values/c8-values-8.5.2.yaml")}"
   ]
-  
+
   /* In case of using the latest values from c8
   values = [
     "${data.http.latest_camunda_values.response_body}"
   ]
   */
 
-  depends_on = [null_resource.merge_kubeconfig, data.http.latest_camunda_values, module.postgresql]
+  depends_on = [data.http.latest_camunda_values]
+}
+
+resource "helm_release" "camunda-platform-minimal" {
+  name             = "camunda-platform"
+  chart            = "camunda-platform"
+  repository       = "https://helm.camunda.io"
+  namespace        = "camunda"
+  create_namespace = true
+  count            = var.minimal_config ? 1 : 0
+  timeout = 200000000000
+
+  values = [
+    "${file("${abspath(path.module)}/values/camunda-minimal.yaml")}"
+  ]
+
+  /* In case of using the latest values from c8
+  values = [
+    "${data.http.latest_camunda_values.response_body}"
+  ]
+  */
+
+  depends_on = [data.http.latest_camunda_values]
 }
 
 data "http" "latest_camunda_values" {
