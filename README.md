@@ -3,9 +3,10 @@
 Measuring the energy and carbon usage of Camunda Workers.
 
 <!-- TOC -->
-* [🏗Develop](#develop)
-  * [C8 on AWS EKS via Terraform](#c8-on-aws-eks-via-terraform)
-* [📨Contact](#contact)
+- [CarboNata 🍝+🗡️](#carbonata-️)
+- [🏗Develop](#develop)
+  - [C8 on AWS EKS via Terraform](#c8-on-aws-eks-via-terraform)
+- [📨Contact](#contact)
 <!-- TOC -->
 
 # 🏗Develop
@@ -18,8 +19,11 @@ All test ressources are under `src/` and `tf/`. while the first folder contains 
 
 - Make sure you have AWS CLI (and configured), Terraform and Zeebe CLI installed
 - Clone Repo
-- Use ``terraform init`` and ``terraform apply`` in the ``tf`` folder of the project
-  
+- Setting up the environments
+  - Running C8 on the locally configured kubernetes cluster i.e. the cluster which is active via the ``.kubeconf`` file
+    - Use ``terraform init`` and ``terraform apply`` in the ``tf/c8`` of the project
+  - (Optional) If you want to use an AWS EKS cluster configured according to Camunda and setup your ``.kubeconf`` accordingly
+    - Use ``terraform init`` and ``terraform apply`` in the ``tf/eks`` of the project and afterwards setup C8
 - (Camunda 8) When everything is finished you can access 
   - Camunda Operate via: ``kubectl port-forward -n camunda8 svc/camunda-platform-operate  8080:80`` and afterwards via ``localhost:8080`` and creds ``demo:demo``
   - Camunda Tasklist via: ``kubectl port-forward -n camunda8 svc/camunda-platform-tasklist  8081:80`` and afterwards via ``localhost:8081`` and creds ``demo:demo``
