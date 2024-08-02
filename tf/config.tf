@@ -7,3 +7,8 @@ variable "camunda-cluster-name" {
     default = "carbonata-cluster"
     type = string
 }
+
+variable "kubernetes_local" {
+  default = true
+  type = bool
+}

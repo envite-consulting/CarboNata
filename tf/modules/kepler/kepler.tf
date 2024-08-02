@@ -6,10 +6,9 @@ resource "helm_release" "kepler" {
   create_namespace = true
 
   values = [
-    "${file("./values/kepler-values.yaml")}"
+    "${file("${abspath(path.module)}/values/kepler-values.yaml")}"
   ]
 
-  depends_on = [ helm_release.prometheus ]  
 }
 
 resource "kubernetes_config_map_v1" "kepler_grafana_dashboards" {

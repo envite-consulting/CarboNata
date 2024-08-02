@@ -1,0 +1,96 @@
+#
+# Camunda - Latest
+#
+zeebe:
+  metrics:
+      ## @param zeebe.metrics.prometheus Prometheus metrics endpoint
+      prometheus: /actuator/prometheus
+  clusterSize: "1"
+  ## @param zeebe.partitionCount defines how many zeebe partitions are set up in the cluster
+  partitionCount: "1"
+  ## @param zeebe.replicationFactor defines how each partition is replicated, the value defines the number of nodes
+  replicationFactor: "1"
+
+zeebe-gateway:
+  replicas: 1 
+
+global:
+  # https://github.com/camunda/camunda-platform/releases
+  # https://hub.docker.com/u/camunda
+  image:
+    # renovate: datasource=docker depName=camunda/zeebe
+    tag: 8.5.2
+  identity:
+    auth:
+      # Disable the Identity authentication for local development
+      # it will fall back to basic-auth: demo/demo as default user
+      enabled: false
+
+# Disable identity as part of the camunda platform core
+identity:
+  enabled: false
+
+console:
+  # Camunda Enterprise repository.
+  # registry.camunda.cloud/console
+  image:
+    # renovate: datasource=docker depName=camunda/console lookupName=registry.camunda.cloud/console/console-sm
+    tag: 8.5.48
+
+connectors:
+  enabled: false
+  # https://hub.docker.com/r/camunda/connectors-bundle/tags
+  image:
+    repository: camunda/connectors-bundle
+    tag: 8.5.3
+  inbound:
+    mode: disabled  
+
+operate:
+  # https://hub.docker.com/r/camunda/operate/tags
+  image:
+    # renovate: datasource=docker depName=camunda/operate
+    tag: 8.5.2
+
+optimize:
+  enabled: false
+  # https://hub.docker.com/r/camunda/optimize/tags
+  image:
+    repository: camunda/optimize
+    # renovate: datasource=docker depName=camunda/optimize
+    tag: 8.5.2
+
+webModeler:
+  enabled: false
+  # Camunda Enterprise repository.
+  # registry.camunda.cloud/web-modeler-ee
+  image:
+    # renovate: datasource=docker depName=camunda/web-modeler lookupName=registry.camunda.cloud/web-modeler-ee/modeler-restapi
+    tag: 8.5.2
+
+#
+# Identity - Keycloak
+#
+
+identityKeycloak:
+  enabled: false
+  # https://hub.docker.com/r/bitnami/keycloak/tags
+  image:
+    repository: bitnami/keycloak
+    tag: 23.0.7
+  postgresql:
+    # https://hub.docker.com/r/bitnami/postgresql/tags
+    image:
+      repository: bitnami/postgresql
+      tag: 15.7.0
+
+
+#
+# Elasticsearch
+#
+
+elasticsearch:
+  # https://hub.docker.com/r/bitnami/elasticsearch/tags
+  image:
+    repository: bitnami/elasticsearch
+    tag: 8.12.2
