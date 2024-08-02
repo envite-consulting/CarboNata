@@ -2,7 +2,7 @@ resource "helm_release" "kepler" {
   name = "kepler"
   chart = "kepler"
   repository = "https://sustainable-computing-io.github.io/kepler-helm-chart"
-  namespace = "kepler"
+  namespace = var.namespace
   create_namespace = true
 
   values = [
@@ -14,7 +14,7 @@ resource "helm_release" "kepler" {
 resource "kubernetes_config_map_v1" "kepler_grafana_dashboards" {
   metadata {
     name      = "kepler-grafana-dashboard"
-    namespace = "kepler"
+    namespace = var.namespace
     labels = {
       grafana_dashboard : "1"
     }
