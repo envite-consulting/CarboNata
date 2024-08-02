@@ -24,13 +24,22 @@ All test ressources are under `src/` and `tf/`. while the first folder contains 
     - Use ``terraform init`` and ``terraform apply`` in the ``tf/c8`` of the project
   - (Optional) If you want to use an AWS EKS cluster configured according to Camunda and setup your ``.kubeconf`` accordingly
     - Use ``terraform init`` and ``terraform apply`` in the ``tf/eks`` of the project and afterwards setup C8
-- (Camunda 8) When everything is finished you can access 
-  - Camunda Operate via: ``kubectl port-forward -n camunda8 svc/camunda-platform-operate  8080:80`` and afterwards via ``localhost:8080`` and creds ``demo:demo``
-  - Camunda Tasklist via: ``kubectl port-forward -n camunda8 svc/camunda-platform-tasklist  8081:80`` and afterwards via ``localhost:8081`` and creds ``demo:demo``
-  - Camunda Zeebee Gateway via: ``kubectl port-forward -n camunda8 svc/camunda-platform-zeebe-gateway 26500:26500`` and afterwards via ``localhost:26500`` and creds ``demo:demo``
+- (Camunda 8) When everything is finished you can access the following
+  - (🗡️ Important 🗡️) If you have Camunda Identity and Keycloak enabled you should keep the ports of these open via:
+    - ``kubectl port-forward -n camunda svc/camunda-platform-keycloak 18080:8080`` and ``kubectl port-forward -n camunda svc/camunda-platform-identity 8080:8080`` afterwards via ``localhost:8083`` and creds ``demo:demo`` 
+  - Camunda Operate via: 
+    - ``kubectl port-forward -n camunda svc/camunda-platform-operate  8080:80`` and afterwards via ``localhost:8080`` and creds ``demo:demo``
+  - Camunda Tasklist via: 
+    - ``kubectl port-forward -n camunda svc/camunda-platform-tasklist  8081:80`` and afterwards via ``localhost:8081`` and creds ``demo:demo``
+  - Camunda Zeebee Gateway via: 
+    - ``kubectl port-forward -n camunda svc/camunda-platform-zeebe-gateway 26500:26500`` and afterwards via ``localhost:26500`` and creds ``demo:demo``
     - The Sample_Process and its worker should already be deployed, therefore you can kick off an instance via ``zbctl create instance Fibonacciprocess --insecure``
     - Alternatively, look at the job resource in the camunda namespace
-  - Grafana via: ``kubectl port-forward -n monitoring svc/kube-prometheus-stackr-grafana 9102:80`` and afterwards via ``localhost:9102`` and creds ``admin:prom-operator``
+  - Grafana via: 
+    - ``kubectl port-forward -n monitoring svc/kube-prometheus-stackr-grafana 9102:80`` and afterwards via ``localhost:9102`` and creds ``admin:prom-operator``
+  - Camunda Optimize via: 
+    - ``kubectl port-forward -n camunda svc/camunda-platform-optimize 8083:8090`` and afterwards via ``localhost:8083`` and creds ``demo:demo``
+  
 
 # 📨Contact
 
