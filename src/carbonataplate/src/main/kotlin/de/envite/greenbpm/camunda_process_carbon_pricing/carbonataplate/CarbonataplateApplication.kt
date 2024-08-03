@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class CarbonataplateApplication
 
 fun main(args: Array<String>) {
-	runApplication<CarbonataplateApplication>(*args)
+    runApplication<CarbonataplateApplication>(*args)
 }
