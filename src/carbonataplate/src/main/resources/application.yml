@@ -1,1 +1,18 @@
 spring.application.name: carbonataplate
+server.port: 8181
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          carbonata-plate-client:
+            authorization-grant-type: client_credentials
+            provider: camunda-platform-auth
+            client-id: ${CAMUNDA_CLIENT_ID}
+            client-secret: ${CAMUNDA_CLIENT_SECRET}
+        provider:
+          camunda-platform-auth:
+            issuer-uri: ${CAMUNDA_PLATFORM_AUTH_ISSUER}
+carbonata-plate:
+  camunda-optimize:
+    base-path: ${CAMUNDA_OPTIMIZE_BASE_PATH}
