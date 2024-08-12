@@ -6,13 +6,12 @@ spring:
       client:
         registration:
           carbonata-plate-client:
-            authorization-grant-type: client_credentials
             provider: camunda-platform-auth
-            client-id: ${CAMUNDA_CLIENT_ID}
-            client-secret: ${CAMUNDA_CLIENT_SECRET}
+            client-id: carbonataplate
+            client-secret: Gz8T3yg0ELt8GlwOGBP9zZx7W6k7WEeJ
         provider:
           camunda-platform-auth:
-            issuer-uri: ${CAMUNDA_PLATFORM_AUTH_ISSUER}
+            issuer-uri: Gz8T3yg0ELt8GlwOGBP9zZx7W6k7WEeJ
 carbonata-plate:
   camunda-optimize:
-    base-path: ${CAMUNDA_OPTIMIZE_BASE_PATH}
+    base-path: http://localhost:8083
