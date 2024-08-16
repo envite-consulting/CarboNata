@@ -56,7 +56,6 @@ class CamundaOptimizeClientTest{
         mockWebServer.enqueue(
             MockResponse()
                 .setResponseCode(200)
-                .setBody("{}")
                 .addHeader("Content-Type", "application/json")
         )
 
