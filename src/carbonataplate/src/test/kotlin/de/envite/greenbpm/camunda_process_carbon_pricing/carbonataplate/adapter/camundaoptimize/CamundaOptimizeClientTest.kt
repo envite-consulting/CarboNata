@@ -1,7 +1,10 @@
 package de.envite.greenbpm.camunda_process_carbon_pricing.carbonataplate.adapter.camundaoptimize
 
 import de.envite.greenbpm.camunda_process_carbon_pricing.carbonataplate.domain.model.ProcessReport
+import de.envite.greenbpm.camunda_process_carbon_pricing.carbonataplate.usecase.out.CostCommandException
 import io.kotest.assertions.assertSoftly
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldNotContain
@@ -33,13 +36,15 @@ class CamundaOptimizeClientTest{
         }
     }
 
-    private lateinit var camundaOptimizeClient: CamundaOptimizeClient
-    private lateinit var baseUrl: String;
+    private lateinit var classUnderTest: CamundaOptimizeClient
+    private lateinit var baseUrl: String
+
+    private val processReport = ProcessReport(22.0, "processInstanceId", "processDefinitionKey")
 
     @BeforeEach
     fun setUpClassUnderTest() {
         baseUrl = "http://localhost:${mockWebServer.port}"
-        camundaOptimizeClient = CamundaOptimizeClient(
+        classUnderTest = CamundaOptimizeClient(
             WebClient.builder()
                 .baseUrl(baseUrl)
                 .build()
@@ -47,16 +52,15 @@ class CamundaOptimizeClientTest{
     }
 
     @Test
-    fun foo() {
+    fun should_post_data_without_error() {
         mockWebServer.enqueue(
             MockResponse()
                 .setResponseCode(200)
                 .setBody("{}")
                 .addHeader("Content-Type", "application/json")
         )
-        val processReport = ProcessReport(22.0, "processInstanceId", "processDefinitionKey")
 
-        camundaOptimizeClient.exportCost(processReport)
+        classUnderTest.exportCost(processReport)
 
         val request = mockWebServer.takeRequest()
         val bodyString = request.body.readUtf8()
@@ -75,4 +79,13 @@ class CamundaOptimizeClientTest{
         }
     }
 
+    @Test
+    fun should_throw_on_500() {
+        mockWebServer.enqueue(MockResponse().setResponseCode(500))
+
+        val exception = shouldThrow<CostCommandException> {
+            classUnderTest.exportCost(processReport)
+        }
+        exception.message?.shouldBeEqual("Could not post data to Optimize")
+    }
 }
