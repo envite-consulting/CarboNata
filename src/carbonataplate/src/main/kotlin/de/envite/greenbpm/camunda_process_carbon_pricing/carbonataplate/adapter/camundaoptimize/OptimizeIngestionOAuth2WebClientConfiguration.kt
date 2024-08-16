@@ -14,19 +14,19 @@ import org.springframework.web.reactive.function.client.WebClient
 private const val CARBO_NATA_PLATE = "CarboNataPlate"
 
 @Configuration
-class OptimizeIngestionOAuth2WebClientConfiguration {
-
+class OptimizeIngestionOAuth2WebClientConfiguration(
     @Value("\${carbonata-plate.camunda-optimize.base-path}")
-    val basePath: String = ""
+    private val basePath: String,
 
     @Value("\${spring.security.oauth2.client.provider.camunda-platform-auth.issuer-uri}")
-    val issuerUri: String = ""
+    private val issuerUri: String,
 
     @Value("\${spring.security.oauth2.client.registration.carbonata-plate-client.client-id}")
-    val clientId: String = ""
+    private val clientId: String,
 
     @Value("\${spring.security.oauth2.client.registration.carbonata-plate-client.client-secret}")
-    val clientSecret: String = ""
+    private val clientSecret: String,
+) {
 
     @Bean
     fun clientRegistration(): ClientRegistration {
