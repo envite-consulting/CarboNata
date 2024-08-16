@@ -30,7 +30,9 @@ class CamundaOptimizeClient(
             .onStatus(HttpStatusCode::isError) { _ ->
                 Mono.error { throw CostCommandException(errorMessage) }
             }
-            .bodyToMono(String::class.java).doOnNext { response -> log().debug("Response: $response") }
+            .bodyToMono(String::class.java)
+                .doOnNext { response -> log().debug("Response: $response") }
+                .defaultIfEmpty("")
             .doOnError { error -> log().error("Error: ${error.message}") }
             .blockOptional()
             .orElseThrow { CostCommandException(errorMessage) }
