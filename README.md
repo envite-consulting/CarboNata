@@ -3,6 +3,7 @@
 Measuring the energy and carbon usage of Camunda Workers.
 
 <!-- TOC -->
+- [CarboNata 🍝+🗡️](#carbonata-️)
 - [🏗Develop](#develop)
   - [C8 on AWS EKS via Terraform](#c8-on-aws-eks-via-terraform)
 - [📨Contact](#contact)
@@ -24,6 +25,8 @@ All test ressources are under `src/` and `tf/`. while the first folder contains 
   - (Optional) If you want to use an AWS EKS cluster configured according to Camunda and setup your ``.kubeconf`` accordingly
     - Use ``terraform init`` and ``terraform apply`` in the ``tf/eks`` of the project and afterwards setup C8
 - (Camunda 8) When everything is finished you can access the following
+  - (🗡️ Convenience 🗡️) Execute the script ``tf/scripts/forwards.sh`` to open all needed port-forwards in the background
+  - Port-forwards needed for local dev:
   - (🗡️ Important 🗡️) If you have Camunda Identity and Keycloak enabled you should keep the ports of these open via:
     - ``kubectl port-forward -n camunda svc/camunda-platform-keycloak 18080:80`` and ``kubectl port-forward -n camunda svc/camunda-platform-identity 8080:80`` afterwards via ``localhost:8083`` and creds ``demo:demo`` 
   - Camunda Operate via: 
