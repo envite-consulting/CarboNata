@@ -1,0 +1,10 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          carbonata-plate-client:
+            client-secret: test-secret
+        provider:
+          camunda-platform-auth:
+            issuer-uri: test-issue-uri
