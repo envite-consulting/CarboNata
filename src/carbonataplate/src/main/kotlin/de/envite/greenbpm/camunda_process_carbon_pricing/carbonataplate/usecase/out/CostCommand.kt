@@ -1,8 +1,7 @@
 package de.envite.greenbpm.camunda_process_carbon_pricing.carbonataplate.usecase.out
 
-import de.envite.greenbpm.camunda_process_carbon_pricing.carbonataplate.domain.model.output.CamundaOptimizeIngestion
-import reactor.core.publisher.Mono
+import de.envite.greenbpm.camunda_process_carbon_pricing.carbonataplate.domain.model.ProcessReport
 
-interface CostCommand {
-    fun exportCost(ingestionValue: CamundaOptimizeIngestion): Mono<String>
+fun interface CostCommand {
+    fun exportCost(processReport: ProcessReport)
 }

@@ -1,4 +1,4 @@
-package de.envite.greenbpm.camunda_process_carbon_pricing.carbonataplate.infrastructure.config
+package de.envite.greenbpm.camunda_process_carbon_pricing.carbonataplate.adapter.camundaoptimize
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
