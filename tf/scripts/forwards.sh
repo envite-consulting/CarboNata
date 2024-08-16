@@ -1,3 +1,4 @@
+#!/bin/sh
 kubectl port-forward -n camunda svc/camunda-platform-keycloak 18080:80 & \
 kubectl port-forward -n camunda svc/camunda-platform-identity 8080:80 & \
 kubectl port-forward -n camunda svc/camunda-platform-operate  8081:80 & \
