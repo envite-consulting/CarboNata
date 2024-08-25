@@ -12,7 +12,7 @@ zeebe:
   replicationFactor: "1"
 
 zeebe-gateway:
-  replicas: 1 
+  replicas: 1
 
 global:
   # https://github.com/camunda/camunda-platform/releases
@@ -44,7 +44,7 @@ connectors:
     repository: camunda/connectors-bundle
     tag: 8.5.3
   inbound:
-    mode: disabled  
+    mode: disabled
 
 operate:
   # https://hub.docker.com/r/camunda/operate/tags
@@ -53,6 +53,31 @@ operate:
     tag: 8.5.2
 
 optimize:
+  configuration: |-
+    zeebe:
+      enabled: true
+      partitionCount: 3
+    es:
+      connection:
+        nodes:
+          - host: "camunda-platform-elasticsearch"
+            httpPort: 9200
+    spring:
+      profiles:
+        active: "ccsm"
+    security:
+      auth:
+        cookie:
+          same-site:
+            enabled: false
+        ccsm:
+          redirectRootUrl: "http://localhost:8083"
+    api:
+      audience: "optimize-api"
+      jwtSetUri: "http://camunda-platform-keycloak:80/auth/realms/camunda-platform/protocol/openid-connect/certs"
+    externalVariable:
+      import:
+        enabled: true
   enabled: true
   # https://hub.docker.com/r/camunda/optimize/tags
   image:
