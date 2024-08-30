@@ -38,9 +38,9 @@ All test ressources are under `src/` and `tf/`. while the first folder contains 
     - The Sample_Process and its worker should already be deployed, therefore you can kick off an instance via ``zbctl create instance Fibonacciprocess --insecure``
     - Alternatively, look at the job resource in the camunda namespace
   - Grafana via: 
-    - ``kubectl port-forward -n monitoring svc/kube-prometheus-stackr-grafana 9102:80`` and afterwards via ``localhost:9102`` and creds ``admin:prom-operator``
+    - ``kubectl port-forward -n monitoring svc/kube-prometheus-stack-grafana 9102:80`` and afterwards via ``localhost:9102`` and creds ``admin:prom-operator``
   - Camunda Optimize via: 
-    - ``kubectl port-forward -n camunda svc/camunda-platform-optimize 8083:8090`` and afterwards via ``localhost:8083`` and creds ``demo:demo``
+    - ``kubectl port-forward -n camunda svc/camunda-platform-optimize 8083:80`` and afterwards via ``localhost:8083`` and creds ``demo:demo``
   
 
 # 📨Contact
