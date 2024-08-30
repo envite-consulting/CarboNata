@@ -19,3 +19,5 @@ spring:
 carbonata-plate:
   camunda-optimize:
     base-path: http://localhost:8083
+  prometheus:
+    base-path: http://localhost:9102
