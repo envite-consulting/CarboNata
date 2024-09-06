@@ -8,7 +8,9 @@ import org.junit.jupiter.params.provider.MethodSource
 class FibonacciKtTest {
     @ParameterizedTest(name = "For {0}, the Fibonacci is {1}")
     @MethodSource("getData")
-    fun `should return correct fibonacci values`(input: Int, expected: Int) = fibonacciRec(input) shouldBe expected
+    fun `should return correct fibonacci values`(input: Int, expected: Int) {
+        fibonacciRec(input) shouldBe expected
+    }
 
     companion object{
         @JvmStatic
