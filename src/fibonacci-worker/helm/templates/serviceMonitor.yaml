@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: fibonacci-worker
+  labels:
+    release: kube-prometheus-stack
+    app: fibonacci-worker
+spec:
+  jobLabel: job
+  endpoints:
+    - interval: 5s
+      path: /actuator/prometheus
+      port: http-traffic
+  selector:
+    matchLabels:
+      app: fibonacci-worker
+      job: {{ .Values.service.jobName }}
