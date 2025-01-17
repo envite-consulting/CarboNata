@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "fibonacci-worker.fullname" . }}
+  labels:
+    app: fibonacci-worker
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+       app: fibonacci-worker
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/actuator/prometheus"
+        prometheus.io/port: "8080"  # Use the correct port where your app is running
+      labels:
+        app: fibonacci-worker
+    spec:
+      containers:
+        env:
+          - name: KUBERNETES_CLUSTER_DOMAIN
+            value: {{ quote .Values.kubernetesClusterDomain}}
+          - name: SAAS_REGION
+            value: {{ quote .Values.container.env.saasRegion }}
+          - name: SAAS_CLUSTER_ID
+            value: {{ quote .Values.container.env.saasClusterId}}
+          - name: SAAS_CLIENT_ID
+            value: {{ quote .Values.container.env.saasClientId}}
+          - name: SAAS_CLIENT_SECRET
+            value: {{ quote .Values.container.env.saasClientSecret}}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+          - name: http
+            containerPort: {{ .Values.service.port }}
+            protocol: TCP
