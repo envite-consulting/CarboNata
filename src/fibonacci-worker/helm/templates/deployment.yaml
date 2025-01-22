@@ -14,25 +14,26 @@ spec:
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/path: "/actuator/prometheus"
-        prometheus.io/port: "8080"  # Use the correct port where your app is running
+        prometheus.io/port: "8080"
       labels:
         app: fibonacci-worker
     spec:
       containers:
-        env:
-          - name: KUBERNETES_CLUSTER_DOMAIN
-            value: {{ quote .Values.kubernetesClusterDomain}}
-          - name: SAAS_REGION
-            value: {{ quote .Values.container.env.saasRegion }}
-          - name: SAAS_CLUSTER_ID
-            value: {{ quote .Values.container.env.saasClusterId}}
-          - name: SAAS_CLIENT_ID
-            value: {{ quote .Values.container.env.saasClientId}}
-          - name: SAAS_CLIENT_SECRET
-            value: {{ quote .Values.container.env.saasClientSecret}}
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        ports:
-          - name: http
-            containerPort: {{ .Values.service.port }}
-            protocol: TCP
+        - name: fibonacci-worker
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: CLIENT_REGION
+              value: {{ quote .Values.container.env.saasRegion }}
+            - name: CLUSTER_ID
+              value: {{ quote .Values.container.env.saasClusterId }}
+            - name: CLIENT_ID
+              value: {{ quote .Values.container.env.saasClientId }}
+            - name: CLIENT_SECRET
+              value: {{ quote .Values.container.env.saasClientSecret }}
+            - name: CLIENT_MODE
+              value: {{ quote .Values.container.env.saasClientMode }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
