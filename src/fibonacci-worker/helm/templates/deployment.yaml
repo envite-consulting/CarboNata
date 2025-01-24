@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: fibonacci-worker
-          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          image: {{ .Values.image.repository | default "jabowski/fibonacci-worker" }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: CLIENT_REGION

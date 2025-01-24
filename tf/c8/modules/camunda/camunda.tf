@@ -4,7 +4,7 @@ resource "helm_release" "camunda-platform" {
   repository       = "https://helm.camunda.io"
   namespace        = var.namespace
   create_namespace = true
-  count            = var.minimal_config ? 0 : 1
+  count            = (var.minimal_config || var.saas ) ? 0 : 1
   timeout = 600000
 
   values = [
@@ -26,7 +26,7 @@ resource "helm_release" "camunda-platform-minimal" {
   repository       = "https://helm.camunda.io"
   namespace        = var.namespace
   create_namespace = true
-  count            = var.minimal_config ? 1 : 0
+  count            = (var.minimal_config && !var.saas) ? 1 : 0
   timeout = 600000
 
   values = [
@@ -49,48 +49,3 @@ data "http" "latest_camunda_values" {
     Accept = "text/yaml"
   }
 }
-
-/*
-
-resource "helm_release" "console-worker" {
-  name       = "console-worker"
-  chart      = "console-worker-chart"
-  repository = "https://maxbehr801.github.io/helmrepotest"
-  namespace  = var.namespace
-  version    = "0.0.2"
-  count      = var.create_module ? 1 : 0
-}
-
-resource "kubernetes_job_v1" "processstart" {
-  count = var.create_module ? 1 : 0
-  metadata {
-    name = "processstart"
-    namespace = var.namespace
-  }
-  spec {
-    template {
-      metadata {}
-      spec {
-        container {
-          name  = "processtart"
-          image = "sitapati/zbctl:8.2.10"
-          
-
-          env {
-            name  = "ZEEBE_ADDRESS"
-            value = "camunda-platform-zeebe-gateway:26500"
-          }
-
-          command = ["/zbctl"]
-          args = [ "create", "instance", "Sample_Process" , "--insecure"]
-        }
-
-        restart_policy = "Never"
-      }
-    }
-    backoff_limit = 1
-  }
-  wait_for_completion = true
-} 
-
-*/
