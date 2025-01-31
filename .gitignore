@@ -37,3 +37,5 @@ build/
 *.tfstate
 *.tfstate.*
 **/.terraform.lock.hcl
+### env ###
+.env
