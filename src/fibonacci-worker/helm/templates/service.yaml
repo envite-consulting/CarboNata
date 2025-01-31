@@ -4,7 +4,6 @@ metadata:
   name: {{ include "fibonacci-worker.fullname" . }}
   labels:
     app: fibonacci-worker
-    job: {{ .Values.service.jobName }}
 spec:
   type: {{ .Values.service.type }}
   ports:
