@@ -18,12 +18,12 @@ module "camunda" {
 
 module "prometheus" {
   source     = "./modules/prometheus"
-  depends_on = [ module.camunda ]
   namespace  = "grafana"
 }
 
 module "fibonacci-worker" {
   source = "./modules/worker"
+  depends_on = [ module.prometheus ]
 }
 
 
