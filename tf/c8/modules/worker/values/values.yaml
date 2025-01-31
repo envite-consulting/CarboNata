@@ -1,13 +1,5 @@
 replicaCount: 1
 
-container:
-  env:
-   saasRegion: null
-   saasClusterId: null
-   saasClientId: null
-   saasClientSecret: null
-   saasClientMode: null
-
 image:
   pullPolicy: Always
   tag: v0.1.1
