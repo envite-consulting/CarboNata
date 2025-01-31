@@ -3,15 +3,22 @@
 Measuring the energy and carbon usage of Camunda Workers.
 
 <!-- TOC -->
-- [CarboNata 🍝+🗡️](#carbonata-️)
-- [🏗Develop](#develop)
-  - [C8 on AWS EKS via Terraform](#c8-on-aws-eks-via-terraform)
-- [📨Contact](#contact)
+* [CarboNata 🍝+🗡️](#carbonata-)
+* [🏗Develop](#develop)
+  * [Running it on a local cluster](#running-it-on-a-local-cluster)
+  * [C8 on AWS EKS via Terraform](#c8-on-aws-eks-via-terraform)
+* [📨Contact](#contact)
 <!-- TOC -->
 
 # 🏗Develop
 
-All test ressources are under `src/` and `tf/`. while the first folder contains the test workers and processes, the latter contains the Terraform files to setup a Camunda 8 cluster based on AWS EKS and deploys the neccessary resources.
+All test resources are under `src/` and `tf/`. while the first folder contains the test workers and processes, the latter contains the Terraform files to setup a Camunda 8 cluster based on AWS EKS and deploys the necessary resources.
+
+## Running it on a local cluster
+
+To get easily going execute the `start_locally.sh` script.
+
+The login to Grafana is `admin` and password `prom-operator`.
 
 ## C8 on AWS EKS via Terraform
 > [!IMPORTANT]  
