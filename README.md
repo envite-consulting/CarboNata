@@ -16,6 +16,8 @@ All test resources are under `src/` and `tf/`. while the first folder contains t
 
 ## Running it on a local cluster
 
+Create a local `.env` file base on our [`env_template`](./.env_template).
+
 To get easily going execute the `start_locally.sh` script.
 
 The login to Grafana is `admin` and password `prom-operator`.
