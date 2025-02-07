@@ -23,6 +23,6 @@ echo "Applying terraform"
 echo ""
 terraform apply -auto-approve
 
-echo "Forward Grafana Port to $GRAFANA_FORWORDED_PORT"
+echo "Forward Grafana Port to $GRAFANA_FORWARDED_PORT"
 echo ""
-kubectl port-forward -n grafana svc/kube-prometheus-stack-grafana $GRAFANA_FORWORDED_PORT:80 &> /dev/null &
+kubectl port-forward -n grafana svc/kube-prometheus-stack-grafana $GRAFANA_FORWARDED_PORT:80 &> /dev/null &
