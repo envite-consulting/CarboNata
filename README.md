@@ -18,7 +18,7 @@ All test resources are under `src/` and `tf/`. while the first folder contains t
 
 Create a local `.env` file base on our [`env_template`](./.env_template).
 
-To get easily going execute the `start_locally.sh` script.
+To get easily going execute the `start_locally.sh` script. If you want to clean up your setup afterward you could use `destroy_locally.sh`.
 
 The login to Grafana is `admin` and password `prom-operator`.
 
