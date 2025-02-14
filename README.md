@@ -14,13 +14,16 @@ Measuring the energy and carbon usage of Camunda Workers.
 
 All test resources are under `src/` and `tf/`. while the first folder contains the test workers and processes, the latter contains the Terraform files to setup a Camunda 8 cluster based on AWS EKS and deploys the necessary resources.
 
-## Running it on a local cluster
+## Running it on a local K8s cluster using C8 SaaS
 
 Create a local `.env` file base on our [`env_template`](./.env_template).
+Fill the variables using the values obtained by creating a new client in your C8 SaaS Cluster.
 
 To get easily going execute the `start_locally.sh` script. If you want to clean up your setup afterward you could use `destroy_locally.sh`.
 
 The login to Grafana is `admin` and password `prom-operator`.
+
+If you want to use C8 Self-Managed, please set ``TF_VAR_CAMUNDA_CLIENT_MODE='self-managed'`` (see https://docs.camunda.io/docs/apis-tools/spring-zeebe-sdk/getting-started/#self-managed).
 
 ## C8 on AWS EKS via Terraform
 > [!IMPORTANT]  
@@ -30,7 +33,7 @@ The login to Grafana is `admin` and password `prom-operator`.
 - Clone Repo
 - Setting up the environments
   - Running C8 on the locally configured kubernetes cluster i.e. the cluster which is active via the ``.kubeconf`` file
-    - Use ``terraform init`` and ``terraform apply`` in the ``tf/c8`` of the project
+    - Use ``terraform init`` and ``terraform apply`` in the ``tf/c8`` of the project after setting ``TF_VAR_CAMUNDA_CLIENT_MODE='self-managed'``
   - (Optional) If you want to use an AWS EKS cluster configured according to Camunda and setup your ``.kubeconf`` accordingly
     - Use ``terraform init`` and ``terraform apply`` in the ``tf/eks`` of the project and afterwards setup C8
 - (Camunda 8) When everything is finished you can access the following

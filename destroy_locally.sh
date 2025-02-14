@@ -12,7 +12,7 @@ then
     echo ""
 fi
 
-echo "Navigating to the corresponding directory (tf/cd)"
+echo "Navigating to the corresponding directory (tf/c8)"
 cd tf/c8 || exit
 
 echo "destroying terraform"
